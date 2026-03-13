@@ -2,16 +2,18 @@
 
 namespace app\services\v1;
 
+use app\dao\v1\SongDao;
 use app\services\BaseServices;
 use kernel\utils\HttpClient;
 
 class SongServices extends BaseServices
 {
     /**
+     * @param  SongDao  $dao
      */
-    public function __construct()
+    public function __construct(SongDao $dao)
     {
-//        $this->dao = $dao;
+        $this->dao = $dao;
     }
 
     public function search($keyword)
@@ -40,7 +42,7 @@ class SongServices extends BaseServices
         $arr = json_decode($str, true);
         if ($arr && isset($arr['data'])) {
             $arr = $arr['data'];
-     
+
             [
                 'pagesize' => $pagesize,
                 'page'     => $page,
@@ -64,6 +66,11 @@ class SongServices extends BaseServices
 
     public function play($audio_id)
     {
+        //查表
+        $info = $this->dao->getInfo($audio_id);
+        if ($info) {
+            return $this->getPlayInfo($info);
+        }
         $params = [
             'hash'  => $audio_id,
             'token' => 'dR1HYaT_ocNRzJfaQ7ydgQ',
@@ -85,11 +92,33 @@ class SongServices extends BaseServices
         } else {
             return [];
         }
+        $song_data = [
+            'song_hash' => $arr['song_hash'],
+            'name'      => $arr['name'],
+            'artist'    => $arr['artist'],
+            'duration'  => $arr['duration'],
+            'cover'     => $arr['cover'],
+            'bitrate'   => $arr['bitrate'],
+            'play_url'  => $arr['play_info']['url'],
+            'format'    => $arr['play_info']['format'],
+            'file_size' => $arr['play_info']['file_size'],
+        ];
+
+        $lyrics_data = [
+            'song_hash' => $arr['song_hash'],
+            'lyrics'    => $arr['lyrics'],
+        ];
+        $data = $this->dao->insert($song_data, $lyrics_data);
+        return $this->getPlayInfo($data);
+    }
+
+    public function getPlayInfo($data): array
+    {
         return [
-            'audio_name'  => $arr['artist'].'-'.$arr['name'],
-            'play_url'    => $arr['play_info']['url'],
-            'author_name' => $arr['artist'],
-            'lyrics'      => $arr['lyrics'],
+            'audio_name'  => $data['artist'].'-'.$data['name'],
+            'play_url'    => $data['play_url'],
+            'author_name' => $data['artist'],
+            'lyrics'      => $data['lyrics'],
         ];
     }
 

@@ -62,6 +62,51 @@ return [
             // 是否需要断线重连
             'break_reconnect' => true,
         ],
+        'sharding' => [
+            // 数据库类型
+            'type' => Env::get('sharding.type', 'mysql'),
+            // 服务器地址
+            'hostname' => Env::get('sharding.hostname', '127.0.0.1'),
+            // 数据库名
+            'database' => Env::get('sharding.database', ''),
+            // 用户名
+            'username' => Env::get('sharding.username', 'root'),
+            // 密码
+            'password' => Env::get('sharding.password', 'root'),
+            // 端口
+            'hostport' => Env::get('sharding.hostport', '3306'),
+            // 连接dsn
+            'dsn' => '',
+            // 数据库连接参数
+            'params' => [
+                PDO::ATTR_CASE => PDO::CASE_LOWER,
+                PDO::ATTR_EMULATE_PREPARES => true,
+            ],
+            // 数据库编码默认采用utf8
+            'charset' => Env::get('sharding.charset', 'utf8'),
+            // 数据库表前缀
+            'prefix' => Env::get('sharding.prefix', 'kn_'),
+            // 数据库调试模式
+            'trigger_sql' => Env::get('sharding.debug', false),
+            // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
+            'deploy' => 0,
+            // 数据库读写是否分离 主从式有效
+            'rw_separate' => false,
+            // 读写分离后 主服务器数量
+            'master_num' => 1,
+            // 指定从服务器序号
+            'slave_no' => '',
+            // 是否严格检查字段是否存在
+            'fields_strict' => true,
+            // 是否需要进行SQL性能分析
+            'sql_explain' => false,
+            // Builder类
+            'builder' => '',
+            // Query类
+            'query' => '',
+            // 是否需要断线重连
+            'break_reconnect' => true,
+        ],
 
         // 更多的数据库配置信息
     ],
