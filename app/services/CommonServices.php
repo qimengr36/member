@@ -3,12 +3,11 @@
 namespace app\services;
 
 use app\dao\common\AppTabBarDao;
+use app\dao\common\ProductCategoryDao;
+use kernel\services\CacheService;
 
 class CommonServices extends BaseServices
 {
-    public function __construct()
-    {
-    }
 
     public function tabBar()
     {
@@ -18,5 +17,9 @@ class CommonServices extends BaseServices
 
     public function cate()
     {
+        $dao = app()->make(ProductCategoryDao::class);
+        return CacheService::remember('CATEGORY', function () use ($dao) {
+            return $dao->getCategory();
+        });
     }
 }
