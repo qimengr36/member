@@ -18,6 +18,13 @@ class My extends AuthController
     }
 
     /**
+     * 菜单
+     */
+    public function menu()
+    {
+
+    }
+    /**
      * 订单
      */
     public function order()

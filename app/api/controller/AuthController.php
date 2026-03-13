@@ -8,32 +8,10 @@ use think\facade\Validate;
 class AuthController extends BaseController
 {
     /**
-     * 当前登陆管理员信息
-     * @var
-     */
-    protected $adminInfo;
-
-    /**
-     * 当前登陆管理员ID
-     * @var
-     */
-    protected $adminId;
-
-    /**
-     * 当前管理员权限
-     * @var array
-     */
-    protected $auth = [];
-
-
-    /**
      * 初始化
      */
     protected function initialize(): void
     {
-        $this->adminId = $this->request->adminId();
-        $this->adminInfo = $this->request->adminInfo();
-        $this->auth = $this->request->adminInfo['rule'] ?? [];
     }
 
     /**

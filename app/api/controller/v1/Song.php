@@ -42,7 +42,4 @@ class Song extends AuthController
         return app('json')->success($result);
     }
 
-    protected function initialize(): void
-    {
-    }
 }

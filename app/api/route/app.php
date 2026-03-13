@@ -13,14 +13,13 @@ use app\http\middleware\AllowOriginMiddleware;
 use think\facade\Config;
 use think\Response;
 
-//Route::group(function () {
-//    $route = 'Login/';
-//    Route::post('login', $route.'login')->option(['real_name' => '用户名密码登录']);
-//    Route::get('login/info', $route.'info')->option(['real_name' => '登录信息']);
-//    Route::get('get_lang', $route.'getLang')->option(['real_name' => '多语言']);
-//})->middleware([
-//    AllowOriginMiddleware::class
-//])->option(['mark' => 'login', 'mark_name' => '登录相关']);
+Route::group(function () {
+    $route = 'Common/';
+    Route::get('tab_bar', $route.'tabBar')->option(['real_name' => '底部菜单']);
+    Route::get('cate', $route.'cate')->option(['real_name' => '产品分类']);
+})->middleware([
+    AllowOriginMiddleware::class
+])->option(['mark' => 'common', 'mark_name' => '公共']);
 
 
 /**
